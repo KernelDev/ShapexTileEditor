@@ -44,7 +44,7 @@ begin
   FImageOffsetX := 0;
   FImageOffsetY := 0;
   FVisible := True;
-  FRect := Types.Rect(0, 0, 50, 50);
+  FRect := Rect(0, 0, 50, 50);
 end;
 
 destructor TCell.Destroy;
@@ -117,10 +117,10 @@ begin
     DrawTop := FRect.Top + FImageOffsetY;
     
     // Source rectangle
-    SrcRect := Types.Rect(0, 0, ImgWidth, ImgHeight);
+    SrcRect := Rect(0, 0, ImgWidth, ImgHeight);
     
     // Destination rectangle
-    DestRect := Types.Rect(DrawLeft, DrawTop, DrawLeft + DrawWidth, DrawTop + DrawHeight);
+    DestRect := Rect(DrawLeft, DrawTop, DrawLeft + DrawWidth, DrawTop + DrawHeight);
     
     // Draw the image
     ACanvas.StretchDraw(DestRect, FImage.Graphic);
