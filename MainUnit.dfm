@@ -26,7 +26,7 @@ object Form1: TForm1
       Top = 10
       Width = 180
       Height = 30
-      Caption = 'Загрузить фильтр'
+      Caption = 'Load Filter'
       TabOrder = 0
       OnClick = btnLoadFilterClick
     end
@@ -35,7 +35,7 @@ object Form1: TForm1
       Top = 50
       Width = 180
       Height = 30
-      Caption = 'Загрузить изображение'
+      Caption = 'Load Image'
       TabOrder = 1
       OnClick = btnLoadImageClick
     end
@@ -44,7 +44,7 @@ object Form1: TForm1
       Top = 90
       Width = 180
       Height = 30
-      Caption = 'Массовая загрузка'
+      Caption = 'Batch Load'
       TabOrder = 2
       OnClick = btnBatchLoadClick
     end
@@ -53,7 +53,7 @@ object Form1: TForm1
       Top = 140
       Width = 60
       Height = 15
-      Caption = 'Размер ячейки:'
+      Caption = 'Cell Size:'
     end
     object edtCellSize: TEdit
       Left = 10
@@ -68,7 +68,7 @@ object Form1: TForm1
       Top = 200
       Width = 150
       Height = 20
-      Caption = 'Использовать фильтр'
+      Caption = 'Use Filter'
       Checked = True
       State = cbChecked
       TabOrder = 4
@@ -78,7 +78,7 @@ object Form1: TForm1
       Top = 240
       Width = 180
       Height = 30
-      Caption = 'Объединить строки'
+      Caption = 'Merge Rows'
       TabOrder = 5
       OnClick = btnMergeRowClick
     end
@@ -87,7 +87,7 @@ object Form1: TForm1
       Top = 280
       Width = 180
       Height = 30
-      Caption = 'Объединить столбцы'
+      Caption = 'Merge Columns'
       TabOrder = 6
       OnClick = btnMergeColumnClick
     end
@@ -96,7 +96,7 @@ object Form1: TForm1
       Top = 320
       Width = 180
       Height = 30
-      Caption = 'Разделить ячейку'
+      Caption = 'Split Cell'
       TabOrder = 7
       OnClick = btnSplitClick
     end
@@ -105,7 +105,7 @@ object Form1: TForm1
       Top = 370
       Width = 80
       Height = 15
-      Caption = 'Масштаб изображения:'
+      Caption = 'Image Scale:'
     end
     object edtScale: TEdit
       Left = 10
@@ -120,7 +120,7 @@ object Form1: TForm1
       Top = 420
       Width = 180
       Height = 30
-      Caption = 'Применить масштаб'
+      Caption = 'Apply Scale'
       TabOrder = 9
       OnClick = btnApplyScaleClick
     end
@@ -129,7 +129,7 @@ object Form1: TForm1
       Top = 470
       Width = 180
       Height = 30
-      Caption = 'Сохранить проект'
+      Caption = 'Save Project'
       TabOrder = 10
       OnClick = btnSaveClick
     end
@@ -138,7 +138,7 @@ object Form1: TForm1
       Top = 510
       Width = 180
       Height = 30
-      Caption = 'Загрузить проект'
+      Caption = 'Load Project'
       TabOrder = 11
       OnClick = btnLoadProjectClick
     end
