@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, System.Generics.Collections,
-  CellUnit, System.Types, Vcl.Grids;
+  CellUnit, System.Types, Vcl.Grids, System.Math;
 
 type
   TForm1 = class(TForm)
@@ -118,7 +118,7 @@ begin
   begin
     for X := 0 to (PaintBox1.Width div FCellSize) do
     begin
-      CellRect := Rect(X * FCellSize, Y * FCellSize, 
+      CellRect := System.Types.Rect(X * FCellSize, Y * FCellSize, 
                        (X + 1) * FCellSize, (Y + 1) * FCellSize);
       
       // Check if cell is visible through filter
@@ -230,7 +230,7 @@ begin
     // Auto-fill cells with images
     if FCells.Count > 0 then
     begin
-      for I := 0 to Min(FCells.Count - 1, FImagesToBatch.Count - 1) do
+      for I := 0 to System.Math.Min(FCells.Count - 1, FImagesToBatch.Count - 1) do
       begin
         FCells[I].Image.LoadFromFile(FImagesToBatch[I]);
       end;
@@ -294,11 +294,11 @@ begin
     end;
     
     // If no cell clicked but we have current image, set it to new cell position
-    if (not Assigned(FSelectedCell)) and (not FCurrentImage.Empty) then
+    if (not Assigned(FSelectedCell)) and (Assigned(FCurrentImage) and (FCurrentImage.Graphic <> nil)) then
     begin
       // Create new cell at click position
       FSelectedCell := TCell.Create(FCells);
-      FSelectedCell.Rect := Rect(X, Y, X + FCellSize, Y + FCellSize);
+      FSelectedCell.Rect := System.Types.Rect(X, Y, X + FCellSize, Y + FCellSize);
       FSelectedCell.Image.Assign(FCurrentImage);
       FCells.Add(FSelectedCell);
       FDraggedCell := FSelectedCell;
@@ -321,7 +321,7 @@ begin
     DY := Y - FLastMouseY;
     
     // Move the cell
-    FDraggedCell.Rect := Rect(
+    FDraggedCell.Rect := System.Types.Rect(
       FDraggedCell.Rect.Left + DX,
       FDraggedCell.Rect.Top + DY,
       FDraggedCell.Rect.Right + DX,
@@ -375,7 +375,7 @@ begin
             MergedRect.Right := FCells[I].Rect.Right;
           
           // Copy image if target cell doesn't have one
-          if FSelectedCell.Image.Empty and not FCells[I].Image.Empty then
+          if (FSelectedCell.Image.Graphic = nil) and (FCells[I].Image.Graphic <> nil) then
             FSelectedCell.Image.Assign(FCells[I].Image);
           
           CellsToRemove.Add(I);
@@ -432,7 +432,7 @@ begin
             MergedRect.Bottom := FCells[I].Rect.Bottom;
           
           // Copy image if target cell doesn't have one
-          if FSelectedCell.Image.Empty and not FCells[I].Image.Empty then
+          if (FSelectedCell.Image.Graphic = nil) and (FCells[I].Image.Graphic <> nil) then
             FSelectedCell.Image.Assign(FCells[I].Image);
           
           CellsToRemove.Add(I);
@@ -473,7 +473,7 @@ begin
   
   // Create 3 new cells (keeping original as first quadrant)
   NewCell := TCell.Create(FCells);
-  NewCell.Rect := Rect(
+  NewCell.Rect := System.Types.Rect(
     FSelectedCell.Rect.Left + HalfWidth,
     FSelectedCell.Rect.Top,
     FSelectedCell.Rect.Right,
@@ -483,7 +483,7 @@ begin
   FCells.Add(NewCell);
   
   NewCell := TCell.Create(FCells);
-  NewCell.Rect := Rect(
+  NewCell.Rect := System.Types.Rect(
     FSelectedCell.Rect.Left,
     FSelectedCell.Rect.Top + HalfHeight,
     FSelectedCell.Rect.Left + HalfWidth,
@@ -493,7 +493,7 @@ begin
   FCells.Add(NewCell);
   
   NewCell := TCell.Create(FCells);
-  NewCell.Rect := Rect(
+  NewCell.Rect := System.Types.Rect(
     FSelectedCell.Rect.Left + HalfWidth,
     FSelectedCell.Rect.Top + HalfHeight,
     FSelectedCell.Rect.Right,
@@ -503,7 +503,7 @@ begin
   FCells.Add(NewCell);
   
   // Resize original
-  FSelectedCell.Rect := Rect(
+  FSelectedCell.Rect := System.Types.Rect(
     FSelectedCell.Rect.Left,
     FSelectedCell.Rect.Top,
     FSelectedCell.Rect.Left + HalfWidth,
@@ -558,7 +558,7 @@ begin
         CellData.ImageScale := FCells[I].ImageScale;
         CellData.OffsetX := FCells[I].ImageOffsetX;
         CellData.OffsetY := FCells[I].ImageOffsetY;
-        CellData.HasImage := not FCells[I].Image.Empty;
+        CellData.HasImage := (FCells[I].Image.Graphic <> nil);
         
         FileStream.WriteBuffer(CellData, SizeOf(CellData));
         
@@ -604,7 +604,7 @@ begin
         
         FileStream.ReadBuffer(CellData, SizeOf(CellData));
         
-        Cell.Rect := Rect(CellData.Left, CellData.Top, CellData.Right, CellData.Bottom);
+        Cell.Rect := System.Types.Rect(CellData.Left, CellData.Top, CellData.Right, CellData.Bottom);
         Cell.ImageScale := CellData.ImageScale;
         Cell.ImageOffsetX := CellData.OffsetX;
         Cell.ImageOffsetY := CellData.OffsetY;
